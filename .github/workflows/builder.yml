@@ -1,5 +1,7 @@
 name: "Builder"
 
+on: push
+
 jobs:
   build:
     name: build
@@ -11,4 +13,16 @@ jobs:
       - name: Setup Unity
         uses: kuler90/setup-unity@v1
         with:
-          unity-modules: android
+          unity-modules: windows-il2cpp
+
+      - name: Activate Unity
+        uses: kuler90/activate-unity@v1
+        with:
+          unity-username: ${{ secrets.UNITY_USERNAME }}
+          unity-password: ${{ secrets.UNITY_PASSWORD }}
+          unity-authenticator-key: ${{ secrets.UNITY_AUTHENTICATOR_KEY }}
+      - name: Build Unity
+        uses: kuler90/build-unity@v1
+        with:
+          build-target: Android
+          build-path: ./build.apk

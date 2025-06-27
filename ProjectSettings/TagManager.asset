@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags:
   - Obstacle
   - Exit
@@ -14,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Jumpable
-  - Obstacle
-  - 
+  - Platforms
+  - Midground
+  - Background
   - 
   - 
   - 
@@ -47,6 +47,12 @@ TagManager:
   - name: Background
     uniqueID: 4226660359
     locked: 0
+  - name: Midground
+    uniqueID: 4012407453
+    locked: 0
+  - name: Platforms
+    uniqueID: 2141182063
+    locked: 0
   - name: Level
     uniqueID: 3254061285
     locked: 0
@@ -56,3 +62,5 @@ TagManager:
   - name: Water
     uniqueID: 3435916533
     locked: 0
+  m_RenderingLayers:
+  - Default

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerNew : MonoBehaviour
 {
+    #region Links
+
     private PlayerMovementNew movement;
     private PlayerJumpNew jump;
     private PlayerDash dash;
@@ -11,6 +13,8 @@ public class PlayerNew : MonoBehaviour
     private PlayerGravity gravity;
 
     private Rigidbody2D rb;
+
+    #endregion
 
     void Awake()
     {
@@ -32,21 +36,30 @@ public class PlayerNew : MonoBehaviour
 
     void FixedUpdate()
     {
-        movement.Move(input.moveInput);
-
-        if (input.jumpInput && jump.State == VerticalMovementState.Grounded)
+        if (input.dashInput && dash?.canDash == true)
         {
-            jump.Jump();
+            dash?.Dash(input.mousePosition);
         }
 
-        if (input.dashInput)
+        if (jump?.State == VerticalMovementState.Falling)
         {
-            //dash.Dash(input.mousePosition);
+            gravity?.ClampFallSpeed();
+            gravity?.SetFallGravity();
         }
-
-        if (jump.State == VerticalMovementState.Falling)
+        else if (jump?.State == VerticalMovementState.Dashing)
         {
-            gravity.ClampFallSpeed();
+
+        }
+        else
+        {
+            gravity?.SetDefaultGravity();
+
+            movement.Move(input.moveInput);
+
+            if (input.jumpInput && jump?.State == VerticalMovementState.Grounded)
+            {
+                jump?.Jump();
+            }
         }
     }
 
@@ -57,8 +70,9 @@ public class PlayerNew : MonoBehaviour
             Vector2 obstacleNormal = collision.contacts[0].normal;
             Vector2 orientationDir = -obstacleNormal;
 
-            orientation.RotateTo(orientationDir);
-            gravity.Transform();
+            orientation?.RotateTo(orientationDir);
+            gravity?.Transform();
+            dash?.StopDash();
             //rb.linearVelocity = Vector2.zero;
         }  
     }

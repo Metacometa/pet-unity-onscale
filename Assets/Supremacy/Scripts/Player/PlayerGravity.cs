@@ -2,13 +2,27 @@ using UnityEngine;
 
 public class PlayerGravity : MonoBehaviour
 {
+    #region Link
+
     private PlayerOrientation orientation;
+
+    private Rigidbody2D rb;
+
+    #endregion
+
+    #region Variables
 
     [SerializeField] private float maxFallSpeed;
 
     private float gravityForce = -9.81f;
 
-    private Rigidbody2D rb;
+    [Space]
+    [Header("Gravity")]
+    [SerializeField] private float fallGravity;
+
+    [SerializeField] private float gravity = 1;
+
+    #endregion
 
     void Awake()
     {
@@ -38,5 +52,15 @@ public class PlayerGravity : MonoBehaviour
         float limitedVerticalSpeed = Mathf.Clamp(verticalSpeed, -maxFallSpeed, maxFallSpeed);
 
         rb.linearVelocity = horizontalDir * horizontalSpeed + orientation.Dir * limitedVerticalSpeed;
+    }
+
+    public void SetFallGravity()
+    {
+        rb.gravityScale = fallGravity;
+    }
+
+    public void SetDefaultGravity()
+    {
+        rb.gravityScale = gravity;
     }
 }

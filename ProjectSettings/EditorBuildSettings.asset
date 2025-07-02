@@ -6,26 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 0.unity
-    guid: 8ec3f45abf3e76c409efa1e37b0d3928
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 1.unity
-    guid: 3e9e1f0534807b14abe73686996b89b7
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 2.unity
-    guid: 395c64c2c8451984b830c80afc68a3e3
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 3.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 4.unity
-    guid: 73da588b9e4af75429ee32174dc4e26e
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 5.unity
-    guid: 43748f2a695589547861f33259c1ffc1
-  - enabled: 1
-    path: Assets/OnScaleOld/Scenes/Level 6.unity
-    guid: 5c1c2d73db13f094b8b5593b29e55558
+    path: Assets/Supremacy/Scenes/TestMechanicsScene.unity
+    guid: 2adf526805e917d47b0795fd3b8b9a93
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b667bbfc5da1fa945be83bb79fa34c6a, type: 2}
   m_UseUCBPForAssetBundles: 0

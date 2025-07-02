@@ -22,10 +22,7 @@ public class PlayerMovementNew : Movement
             Vector3 endPoint = startPoint + dir;
 
             Gizmos.DrawLine(startPoint, endPoint);
-
-            //Debug.DrawRay(transform.position, dir, Color.red);
         }
-
     }
 
     public override void Move(in Vector2 input)
@@ -48,31 +45,13 @@ public class PlayerMovementNew : Movement
         }
         else if (225f < angle && angle <= 315f)
         {
-            evaluatedInput = input.x;
-        }
-
-
-
-        if (orientation.Dir.y > 0)
-        {
             evaluatedInput = -input.x;
         }
-
-
-
-        //float filtredInput = ;
 
         Vector2 horizontalDir = Vector2.Perpendicular(orientation.Dir).normalized;
 
         float verticalSpeed = Vector2.Dot(rb.linearVelocity, orientation.Dir);
 
         rb.linearVelocity = horizontalDir * evaluatedInput * moveSpeed + orientation.Dir * verticalSpeed;
-
-/*        Vector2 moveDirection = new Vector2(input * xDir.x * moveSpeed,
-            rb.linearVelocityY);
-
-
-        rb.linearVelocity += xDir * moveSpeed * Time.fixedDeltaTime;
-        rb.linearVelocity = moveDirection;*/
     }
 }

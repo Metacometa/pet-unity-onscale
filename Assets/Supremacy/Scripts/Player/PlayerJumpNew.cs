@@ -33,9 +33,9 @@ public class PlayerJumpNew : MonoBehaviour
 
     void Update()
     {
-        float angle = Mathf.Repeat(Vector2.SignedAngle(orientation.Dir, Vector2.right), 360f);
-        Debug.Log($"Angle: { angle }");
-        //Debug.Log($"VerticalMovingState: {GetVerticalMovementState()}");
+/*        float angle = Mathf.Repeat(Vector2.SignedAngle(orientation.Dir, Vector2.right), 360f);
+        Debug.Log($"Angle: {angle}");
+        //Debug.Log($"VerticalMovingState: {GetVerticalMovementState()}");*/
     }
 
     public void Jump()

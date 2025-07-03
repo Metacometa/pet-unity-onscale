@@ -8,7 +8,6 @@ public class PlayerDash : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private PlayerOrientation orientation;
     private PlayerGravity gravity;
 
     private IEnumerator dashCoroutine;
@@ -31,7 +30,6 @@ public class PlayerDash : MonoBehaviour
 
     void Awake()
     {
-        orientation = GetComponent<PlayerOrientation>();
         gravity = GetComponent<PlayerGravity>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -53,18 +51,21 @@ public class PlayerDash : MonoBehaviour
         if (isDashing || !canDash) return;
 
         Vector2 playerPosition = transform.position;
-        Vector2 dashPosition = playerPosition - targetPosition;
+        Vector2 dashDir = targetPosition - playerPosition;
 
-        dashCoroutine = DashCoroutine(dashPosition);
+        dashCoroutine = DashCoroutine(dashDir);
         StartCoroutine(dashCoroutine);
     }
 
-    IEnumerator DashCoroutine(Vector3 dashPosition)
+    IEnumerator DashCoroutine(Vector3 dashDir)
     {
-        orientation.Dir = dashPosition;
-        gravity?.Transform();
+        Vector2 previousOrientation = gravity.Orientation;
 
-        //rb.linearVelocity = orientation.Dir * dashSpeed;
+        gravity?.Transform(dashDir);
+
+        gravity.NullifyGravity();
+        //rb.gravityScale = 0f;
+        rb.linearVelocity = gravity.Orientation * dashSpeed;
 
         isDashing = true;
         canDash = false;
@@ -72,6 +73,9 @@ public class PlayerDash : MonoBehaviour
         yield return new WaitForSeconds(dashTime);
 
         isDashing = false;
+
+        //rb.linearVelocity = Vector2.zero;
+        gravity?.Transform(previousOrientation);
     }
 
     void OnDrawGizmos()
@@ -79,11 +83,9 @@ public class PlayerDash : MonoBehaviour
         if (Application.isPlaying)
         {
             Vector2 playerPosition = transform.position;
-            Vector2 dashPosition = playerPosition - GetComponent<PlayerInput>().mousePosition;
+            Vector2 dashPosition = GetComponent<PlayerInput>().mousePosition - playerPosition;
 
             Gizmos.color = Color.white;
-
-            Vector3 dir = rb.linearVelocity.normalized;
 
             Vector3 startPoint = playerPosition;
             Vector3 endPoint = startPoint + (Vector3)dashPosition;

@@ -1314,8 +1314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDashing: 0
   canDash: 0
-  dashTime: 1
-  dashSpeed: 1
+  dashTime: 0.2
+  dashSpeed: 7
 --- !u!58 &1348172922
 CircleCollider2D:
   m_ObjectHideFlags: 0

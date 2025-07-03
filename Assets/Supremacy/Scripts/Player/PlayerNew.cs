@@ -9,7 +9,6 @@ public class PlayerNew : MonoBehaviour
     private PlayerDash dash;
 
     private PlayerInput input;
-    private PlayerOrientation orientation;
     private PlayerGravity gravity;
 
     private Rigidbody2D rb;
@@ -24,7 +23,6 @@ public class PlayerNew : MonoBehaviour
 
         input = GetComponent<PlayerInput>();
 
-        orientation = GetComponent<PlayerOrientation>();
         gravity = GetComponent<PlayerGravity>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -41,25 +39,26 @@ public class PlayerNew : MonoBehaviour
             dash?.Dash(input.mousePosition);
         }
 
-        if (jump?.State == VerticalMovementState.Falling)
+
+        if (jump?.State == VerticalMovementState.Dashing)
+        {
+            return;
+        }
+        else if (jump?.State == VerticalMovementState.Falling)
         {
             gravity?.ClampFallSpeed();
             gravity?.SetFallGravity();
         }
-        else if (jump?.State == VerticalMovementState.Dashing)
-        {
-
-        }
         else
         {
             gravity?.SetDefaultGravity();
+        }
 
-            movement.Move(input.moveInput);
+        movement.Move(input.moveInput);
 
-            if (input.jumpInput && jump?.State == VerticalMovementState.Grounded)
-            {
-                jump?.Jump();
-            }
+        if (input.jumpInput && jump?.State == VerticalMovementState.Grounded)
+        {
+            jump?.Jump();
         }
     }
 
@@ -68,10 +67,8 @@ public class PlayerNew : MonoBehaviour
         if (collision.transform.CompareTag("Obstacle"))
         {
             Vector2 obstacleNormal = collision.contacts[0].normal;
-            Vector2 orientationDir = -obstacleNormal;
+            gravity?.Transform(-obstacleNormal);
 
-            orientation?.RotateTo(orientationDir);
-            gravity?.Transform();
             dash?.StopDash();
             //rb.linearVelocity = Vector2.zero;
         }  

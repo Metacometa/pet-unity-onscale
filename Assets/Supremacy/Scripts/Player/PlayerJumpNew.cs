@@ -7,7 +7,7 @@ public class PlayerJumpNew : MonoBehaviour
 
     protected Rigidbody2D rb;
 
-    private PlayerOrientation orientation;
+    private PlayerGravity gravity;
     private PlayerDash dash;
 
     #endregion
@@ -27,20 +27,13 @@ public class PlayerJumpNew : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        orientation = GetComponent<PlayerOrientation>();
+        gravity = GetComponent<PlayerGravity>();
         dash = GetComponent<PlayerDash>();
-    }
-
-    void Update()
-    {
-/*        float angle = Mathf.Repeat(Vector2.SignedAngle(orientation.Dir, Vector2.right), 360f);
-        Debug.Log($"Angle: {angle}");
-        //Debug.Log($"VerticalMovingState: {GetVerticalMovementState()}");*/
     }
 
     public void Jump()
     {
-        Vector2 jumpDir = -orientation.Dir;
+        Vector2 jumpDir = -gravity.Orientation;
         rb.AddForce(jumpDir * jumpForce, ForceMode2D.Impulse);
     }
 
@@ -49,11 +42,7 @@ public class PlayerJumpNew : MonoBehaviour
         if (dash.isDashing) 
             return VerticalMovementState.Dashing;
 
-
-        float verticalSpeed = Vector2.Dot(rb.linearVelocity.normalized, orientation.Dir);
-
-
-        //Debug.Log($"VerticalSpeed: {verticalSpeed}");
+        float verticalSpeed = Vector2.Dot(rb.linearVelocity.normalized, gravity.Orientation);
 
         if (verticalSpeed > 0.1f)
         {
@@ -78,7 +67,7 @@ public class PlayerJumpNew : MonoBehaviour
 
     private bool GroundCheck()
     {
-        return Physics2D.BoxCast(transform.position, boxSize, 0, orientation.Dir, castDistance, groundLayer);
+        return Physics2D.BoxCast(transform.position, boxSize, 0, gravity.Orientation, castDistance, groundLayer);
     }
 
     private void OnDrawGizmos()
@@ -94,7 +83,7 @@ public class PlayerJumpNew : MonoBehaviour
                 Gizmos.color = Color.red;
             }
 
-            Gizmos.DrawWireCube((Vector2)transform.position + orientation.Dir * castDistance, boxSize);
+            Gizmos.DrawWireCube((Vector2)transform.position + gravity.Orientation * castDistance, boxSize);
         }
     }
 

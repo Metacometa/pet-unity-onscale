@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerMovementNew : Movement
 {
-    private PlayerOrientation orientation;
+    private PlayerGravity gravity;
 
     protected override void Awake()
     {
         base.Awake();
-        orientation = GetComponent<PlayerOrientation>();
+        gravity = GetComponent<PlayerGravity>();
     }
 
     void OnDrawGizmos()
@@ -28,7 +28,7 @@ public class PlayerMovementNew : Movement
     public override void Move(in Vector2 input)
     {
         float evaluatedInput = input.x;
-        float angle = Mathf.Repeat(Vector2.SignedAngle(orientation.Dir, Vector2.right), 360f);
+        float angle = Mathf.Repeat(Vector2.SignedAngle(gravity.Orientation, Vector2.right), 360f);
 
         if ((0f <= angle && angle <= 45f) ||
                 (315f <= angle && angle <= 360f))
@@ -48,10 +48,10 @@ public class PlayerMovementNew : Movement
             evaluatedInput = -input.x;
         }
 
-        Vector2 horizontalDir = Vector2.Perpendicular(orientation.Dir).normalized;
+        Vector2 horizontalDir = Vector2.Perpendicular(gravity.Orientation).normalized;
 
-        float verticalSpeed = Vector2.Dot(rb.linearVelocity, orientation.Dir);
+        float verticalSpeed = Vector2.Dot(rb.linearVelocity, gravity.Orientation);
 
-        rb.linearVelocity = horizontalDir * evaluatedInput * moveSpeed + orientation.Dir * verticalSpeed;
+        rb.linearVelocity = horizontalDir * evaluatedInput * moveSpeed + gravity.Orientation * verticalSpeed;
     }
 }

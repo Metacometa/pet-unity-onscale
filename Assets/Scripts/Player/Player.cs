@@ -11,15 +11,21 @@ public class Player : MonoBehaviour
 
     private PlayerInput input;
     private PlayerGravity gravity;
+    private PlayerCollisionHandler collisionHandler;
 
     private Rigidbody2D rb;
 
     #endregion
 
-    #region Public variables
+    #region Public Variables
 
     public InputContext inputContext;
     public PlayerContext context;
+
+    #endregion
+
+    #region Private Variables
+
 
     #endregion
 
@@ -32,6 +38,8 @@ public class Player : MonoBehaviour
         input = GetComponent<PlayerInput>();
 
         gravity = GetComponent<PlayerGravity>();
+        collisionHandler = GetComponent<PlayerCollisionHandler>();
+
 
         rb = GetComponent<Rigidbody2D>();
     }
@@ -40,6 +48,8 @@ public class Player : MonoBehaviour
     {
         input?.HandleInput(ref inputContext);
         UpdateAirState();
+
+        collisionHandler?.HandleCollision(ref context);
     }
 
     void FixedUpdate()

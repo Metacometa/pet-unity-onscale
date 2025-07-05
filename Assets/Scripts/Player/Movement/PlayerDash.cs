@@ -22,6 +22,8 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private float dashTime;
     [SerializeField] private float dashSpeed;
 
+    [SerializeField] private float postDashSpeed;
+
     #endregion
 
     void Awake()
@@ -46,18 +48,21 @@ public class PlayerDash : MonoBehaviour
     {
         Vector2 previousOrientation = context.Orientation;
 
-        context.Orientation = dashDir;
+        //context.Orientation = dashDir;
+
         context.isDashing = true;
         context.canDash = false;
 
-        rb.linearVelocity = context.Orientation * dashSpeed;
+        rb.linearVelocity = dashDir * dashSpeed;
 
         yield return new WaitForSeconds(dashTime);
+
+        rb.linearVelocity = dashDir * postDashSpeed;
 
         context.isDashing = false;
         context.Orientation = previousOrientation;
 
-        //rb.linearVelocity = Vector2.zero;
+        //
     }
 
     public void StopDash(ref PlayerContext context)

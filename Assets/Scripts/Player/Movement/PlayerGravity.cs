@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerGravity : MonoBehaviour
 {
@@ -13,8 +14,14 @@ public class PlayerGravity : MonoBehaviour
 
     [Space]
     [Header("Gravity")]
-    [SerializeField] private float deafultGravityScale = 1;
+    [SerializeField] private float deafultGravityScale = 10;
     [SerializeField] private float gravityForce = -9.81f;
+
+
+    [Space]
+    [Header("Jump Gravity")]
+
+    [SerializeField] private float jumpGravityScale = 1;
 
     [Space]
     [Header("Fall Gravity")]
@@ -43,8 +50,15 @@ public class PlayerGravity : MonoBehaviour
                 SetFallGravity();
                 ClampFallSpeed(context);
                 break;
-            default:
+            case AirState.Jumping:
+                rb.gravityScale = jumpGravityScale;
+                break;
+            case AirState.Grounded:
                 rb.gravityScale = deafultGravityScale;
+                break;
+            default:
+                SetFallGravity();
+                ClampFallSpeed(context);
                 break;
         }
     }

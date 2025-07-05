@@ -10,6 +10,8 @@ public class PlayerMovement : Movement
 
     public void HandleMovement(in InputContext inputContext, in PlayerContext playerContext)
     {
+        if (playerContext.isDashing) { return; }
+
         float evaluatedInput = OrientInput(inputContext.moveInput, playerContext);
 
         Vector2 horizontalDir = Vector2.Perpendicular(playerContext.Orientation).normalized;

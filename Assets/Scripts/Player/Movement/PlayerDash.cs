@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class PlayerDash : MonoBehaviour
@@ -9,16 +8,13 @@ public class PlayerDash : MonoBehaviour
     private Rigidbody2D rb;
 
     private PlayerGravity gravity;
+    private Player player;
 
     private IEnumerator dashCoroutine;
 
     #endregion
 
     #region Public variables
-
-    public bool isDashing = false;
-    public bool canDash = false;
-
     #endregion
 
     #region Private variables
@@ -31,47 +27,51 @@ public class PlayerDash : MonoBehaviour
     void Awake()
     {
         gravity = GetComponent<PlayerGravity>();
+        player = GetComponent<Player>();
 
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void StopDash()
+    public void HandleDash(in InputContext inputContext, ref PlayerContext playerContext)
     {
-        canDash = true;
-        isDashing = false;
+        if (!inputContext.dashPressed || inputContext.dashInput == Vector2.zero) { return; }
+
+        if (playerContext.isDashing || !playerContext.canDash ) return;
+
+        dashCoroutine = DashCoroutine(inputContext.dashInput, playerContext);
+        StartCoroutine(dashCoroutine);
+    }
+
+    IEnumerator DashCoroutine(Vector3 dashDir, PlayerContext context)
+    {
+        Vector2 previousOrientation = context.Orientation;
+
+        context.Orientation = dashDir;
+        context.isDashing = true;
+        context.canDash = false;
+
+        rb.linearVelocity = context.Orientation * dashSpeed;
+
+        yield return new WaitForSeconds(dashTime);
+
+        context.isDashing = false;
+        context.Orientation = previousOrientation;
+
+        //rb.linearVelocity = Vector2.zero;
+
+
+        //gravity?.Transform(previousOrientation);
+    }
+
+    public void StopDash(ref PlayerContext context)
+    {
+        context.canDash = true;
+        context.isDashing = false;
 
         if (dashCoroutine != null)
         {
             StopCoroutine(dashCoroutine);
         }
-    }
-
-    public void Dash(in Vector2 dashDir)
-    {
-        if (isDashing || !canDash || dashDir == Vector2.zero) return;
-
-        dashCoroutine = DashCoroutine(dashDir);
-        StartCoroutine(dashCoroutine);
-    }
-
-    IEnumerator DashCoroutine(Vector3 dashDir)
-    {
-        Vector2 previousOrientation = gravity.Orientation;
-
-        gravity?.Transform(dashDir);
-        gravity.NullifyGravity();
-
-        rb.linearVelocity = gravity.Orientation * dashSpeed;
-
-        isDashing = true;
-        canDash = false;
-
-        yield return new WaitForSeconds(dashTime);
-
-        isDashing = false;
-
-        rb.linearVelocity = Vector2.zero;
-        gravity?.Transform(previousOrientation);
     }
 
     void OnDrawGizmos()

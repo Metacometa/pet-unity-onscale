@@ -1216,7 +1216,6 @@ GameObject:
   - component: {fileID: 1348172918}
   - component: {fileID: 1348172921}
   - component: {fileID: 1348172920}
-  - component: {fileID: 1348172923}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1399,7 +1398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deafultGravityScale: 10
   gravityForce: -9.81
-  jumpGravityScale: 1
+  jumpGravityScale: 2.5
   maxFallSpeed: 4
   fallGravityScale: 50
   fallGravityLerpSpeed: 1
@@ -1415,8 +1414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40e5eeb801221a84bb9d49cb3c449217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashTime: 0.35
-  dashSpeed: 10
+  dashTime: 0.3
+  dashSpeed: 9
+  postDashSpeed: 2
 --- !u!58 &1348172922
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1453,22 +1453,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.000000029802322}
   m_Radius: 0.535
---- !u!114 &1348172923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1348172910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2b30341cdee3a745a3fc3ba8afaca69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravitySphereRadius: 1
-  gravitySphereMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &1495983802
 GameObject:
   m_ObjectHideFlags: 0

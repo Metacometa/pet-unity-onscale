@@ -47,9 +47,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         input?.HandleInput(ref inputContext);
-        UpdateAirState();
-
-        collisionHandler?.HandleCollision(ref context);
     }
 
     void FixedUpdate()
@@ -59,6 +56,7 @@ public class Player : MonoBehaviour
         jump?.HandleJump(inputContext, context);
         dash?.HandleDash(inputContext, ref context);
 
+        UpdateAirState();
         gravity?.HandleGravity(context);
     }
 
@@ -69,7 +67,6 @@ public class Player : MonoBehaviour
             Vector2 obstacleNormal = collision.contacts[0].normal;
 
             context.Orientation = -obstacleNormal;
-            //gravity?.Transform();
 
             dash?.StopDash(ref context);
             //rb.linearVelocity = Vector2.zero;

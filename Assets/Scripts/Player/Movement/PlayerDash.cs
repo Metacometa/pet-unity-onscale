@@ -48,11 +48,12 @@ public class PlayerDash : MonoBehaviour
     {
         Vector2 previousOrientation = context.Orientation;
 
-        //context.Orientation = dashDir;
+        context.Orientation = Vector2.zero;
 
         context.isDashing = true;
         context.canDash = false;
 
+        rb.gravityScale = 0f;
         rb.linearVelocity = dashDir * dashSpeed;
 
         yield return new WaitForSeconds(dashTime);

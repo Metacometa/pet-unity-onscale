@@ -50,32 +50,6 @@ public class Player : MonoBehaviour
         dash?.HandleDash(inputContext, ref context);
 
         gravity?.HandleGravity(context);
-
-/*        if (input.dashPressed && dash?.canDash == true)
-        {
-            dash?.Dash(input.dashInput);
-        }
-
-        if (AirState == AirState.Dashing)
-        {
-            return;
-        }
-        else if (AirState == AirState.Falling)
-        {
-            gravity?.ClampFallSpeed();
-            gravity?.SetFallGravity();
-        }
-        else
-        {
-            gravity?.SetDefaultGravity();
-        }
-
-        movement.Move(input.moveInput);
-
-        if (input.jumpPressed && AirState == AirState.Grounded)
-        {
-            jump?.Jump();
-        }*/
     }
 
     void OnCollisionEnter2D(Collision2D collision)

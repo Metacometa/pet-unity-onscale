@@ -58,9 +58,6 @@ public class PlayerDash : MonoBehaviour
         context.Orientation = previousOrientation;
 
         //rb.linearVelocity = Vector2.zero;
-
-
-        //gravity?.Transform(previousOrientation);
     }
 
     public void StopDash(ref PlayerContext context)

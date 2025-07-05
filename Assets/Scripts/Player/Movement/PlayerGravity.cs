@@ -32,7 +32,7 @@ public class PlayerGravity : MonoBehaviour
 
     public void HandleGravity(in PlayerContext context)
     {
-        Transform(context);
+        GravityShift(context);
 
         switch (context.airState)
         {
@@ -49,7 +49,7 @@ public class PlayerGravity : MonoBehaviour
         }
     }
 
-    public void Transform(in PlayerContext context)
+    public void GravityShift(in PlayerContext context)
     { 
         Physics2D.gravity = -context.Orientation * gravityForce;
     }
@@ -67,13 +67,9 @@ public class PlayerGravity : MonoBehaviour
         rb.linearVelocity = horizontalDir * horizontalSpeed + context.Orientation * limitedVerticalSpeed;
     }
 
-    #region Gravity Setters
-
     private void SetFallGravity()
     {
         rb.gravityScale = Mathf.Lerp(rb.gravityScale, fallGravityScale, 
             Time.fixedDeltaTime * fallGravityLerpSpeed);
     }
-
-    #endregion
 }

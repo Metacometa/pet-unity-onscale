@@ -34,9 +34,9 @@ public class PlayerNew : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (input.dashInput && dash?.canDash == true)
+        if (input.dashPressed && dash?.canDash == true)
         {
-            dash?.Dash(input.mousePosition);
+            dash?.Dash(input.dashInput);
         }
 
 
@@ -56,7 +56,7 @@ public class PlayerNew : MonoBehaviour
 
         movement.Move(input.moveInput);
 
-        if (input.jumpInput && jump?.State == VerticalMovementState.Grounded)
+        if (input.jumpPressed && jump?.State == VerticalMovementState.Grounded)
         {
             jump?.Jump();
         }

@@ -46,12 +46,9 @@ public class PlayerDash : MonoBehaviour
         }
     }
 
-    public void Dash(in Vector2 targetPosition)
+    public void Dash(in Vector2 dashDir)
     {
-        if (isDashing || !canDash) return;
-
-        Vector2 playerPosition = transform.position;
-        Vector2 dashDir = targetPosition - playerPosition;
+        if (isDashing || !canDash || dashDir == Vector2.zero) return;
 
         dashCoroutine = DashCoroutine(dashDir);
         StartCoroutine(dashCoroutine);
@@ -62,9 +59,8 @@ public class PlayerDash : MonoBehaviour
         Vector2 previousOrientation = gravity.Orientation;
 
         gravity?.Transform(dashDir);
-
         gravity.NullifyGravity();
-        //rb.gravityScale = 0f;
+
         rb.linearVelocity = gravity.Orientation * dashSpeed;
 
         isDashing = true;
@@ -74,13 +70,13 @@ public class PlayerDash : MonoBehaviour
 
         isDashing = false;
 
-        //rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         gravity?.Transform(previousOrientation);
     }
 
     void OnDrawGizmos()
     {
-        if (Application.isPlaying)
+/*        if (Application.isPlaying)
         {
             Vector2 playerPosition = transform.position;
             Vector2 dashPosition = GetComponent<PlayerInput>().mousePosition - playerPosition;
@@ -91,7 +87,7 @@ public class PlayerDash : MonoBehaviour
             Vector3 endPoint = startPoint + (Vector3)dashPosition;
 
             Gizmos.DrawLine(startPoint, endPoint);
-        }
+        }*/
     }
 
 }

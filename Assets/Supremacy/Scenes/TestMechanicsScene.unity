@@ -1107,7 +1107,6 @@ GameObject:
   - component: {fileID: 1348172914}
   - component: {fileID: 1348172918}
   - component: {fileID: 1348172921}
-  - component: {fileID: 1348172919}
   - component: {fileID: 1348172920}
   m_Layer: 0
   m_Name: Player
@@ -1226,9 +1225,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveInput: {x: 0, y: 0}
-  jumpInput: 0
-  dashInput: 0
-  mousePosition: {x: 0, y: 0}
+  dashInput: {x: 0, y: 0}
+  jumpPressed: 0
+  dashPressed: 0
 --- !u!114 &1348172915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,7 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0af85329a18084591e5b4868e7001e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 4
 --- !u!114 &1348172916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,19 +1271,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &1348172919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1348172910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1634c59a6d8597d49a8684da470bbde4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dir: {x: 0, y: 0}
 --- !u!114 &1348172920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,8 +1284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFallSpeed: 1
-  fallGravity: 30
+  fallGravity: 50
   gravity: 1
+  fallGravityLerpSpeed: 1
 --- !u!114 &1348172921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,8 +1301,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDashing: 0
   canDash: 0
-  dashTime: 0.2
-  dashSpeed: 7
+  dashTime: 0.3
+  dashSpeed: 10
 --- !u!58 &1348172922
 CircleCollider2D:
   m_ObjectHideFlags: 0

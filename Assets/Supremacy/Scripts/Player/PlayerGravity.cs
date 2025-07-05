@@ -22,7 +22,11 @@ public class PlayerGravity : MonoBehaviour
 
     [Space]
     [Header("Orientation")]
-    [SerializeField]/*[HideInInspector]*/ private Vector2 orientation;
+    [HideInInspector] private Vector2 orientation;
+
+    [Space]
+    [SerializeField] private float fallGravityLerpSpeed = 1f;
+
     public Vector2 Orientation
     {
         get => orientation.normalized;
@@ -66,7 +70,7 @@ public class PlayerGravity : MonoBehaviour
 
     public void SetFallGravity()
     {
-        rb.gravityScale = Mathf.Lerp(rb.gravityScale, fallGravity, Time.fixedDeltaTime * 2);
+        rb.gravityScale = Mathf.Lerp(rb.gravityScale, fallGravity, Time.fixedDeltaTime * fallGravityLerpSpeed);
         //rb.gravityScale = fallGravity;
     }
 

@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
         gravity = GetComponent<PlayerGravity>();
         collisionHandler = GetComponent<PlayerCollisionHandler>();
 
-
         rb = GetComponent<Rigidbody2D>();
     }
 

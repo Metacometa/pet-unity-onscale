@@ -22,19 +22,16 @@ public class PlayerCollisionHandler : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
 
-        if (dash) EventManager.OnGrounding += dash.StopDash;
+        EventManager.OnGrounding += ResetVelocity;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         Platform platform = collision.transform.GetComponent<Platform>();
 
         if (platform != null)
         {
             EventManager.TriggerGrounding();
-
-            //dash?.StopDash(ref playerContext);
-            rb.linearVelocity = Vector2.zero;
 
             switch (platform.type)
             {
@@ -46,6 +43,11 @@ public class PlayerCollisionHandler : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void ResetVelocity()
+    {
+        rb.linearVelocity = Vector2.zero;
     }
 
     /*

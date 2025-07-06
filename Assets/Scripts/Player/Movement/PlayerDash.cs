@@ -7,7 +7,7 @@ public class PlayerDash : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private PlayerGravity gravity;
+    private PlayerJump jump;
     private Player player;
 
     private IEnumerator dashCoroutine;
@@ -32,12 +32,26 @@ public class PlayerDash : MonoBehaviour
 
     void Awake()
     {
-        gravity = GetComponent<PlayerGravity>();
+        jump = GetComponent<PlayerJump>();
         player = GetComponent<Player>();
 
         rb = GetComponent<Rigidbody2D>();
 
         context = player.context;
+
+        //EventManager.OnGrounding += UpdateDash;
+        EventManager.OnGrounding += StopDash;
+    }
+
+    void Update()
+    {
+        if (jump.GroundCheck())
+        {
+            if (!context.isDashing)
+            {
+                UpdateDash();
+            }
+        }
     }
 
     public void HandleDash(in InputContext inputContext)
@@ -71,8 +85,8 @@ public class PlayerDash : MonoBehaviour
 
     public void StopDash()
     {
-        //context.canDash = true;
-
+        if (!context.isDashing) return;
+        
         context.isDashing = false;
         context.Orientation = previousOrientation;
 
@@ -80,6 +94,11 @@ public class PlayerDash : MonoBehaviour
         {
             StopCoroutine(dashCoroutine);
         }
+    }
+
+    void UpdateDash()
+    {
+        context.canDash = true;
     }
 
     void OnDrawGizmos()
@@ -97,5 +116,4 @@ public class PlayerDash : MonoBehaviour
             Gizmos.DrawLine(startPoint, endPoint);
         }*/
     }
-
 }

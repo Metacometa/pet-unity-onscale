@@ -52,11 +52,11 @@ public class Player : MonoBehaviour
     {
         movement?.HandleMovement(inputContext, context);
 
-        jump?.HandleJump(inputContext, context);
+        jump?.HandleJump(inputContext);
         dash?.HandleDash(inputContext);
 
         UpdateAirState();
-        gravity?.HandleGravity(context);
+        gravity?.HandleGravity();
     }
 
     void UpdateAirState()
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         {
             context.airState = AirState.Jumping;
         }
-        else if (jump.GroundCheck(context))
+        else if (jump.GroundCheck())
         {
             context.airState = AirState.Grounded;
         }

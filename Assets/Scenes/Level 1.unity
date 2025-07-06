@@ -1667,7 +1667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b423757f56a0da4b92576c8c6e76072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deafultGravityScale: 10
+  deafultGravityScale: 20
   gravityForce: -9.81
   jumpGravityScale: 2.5
   maxFallSpeed: 4

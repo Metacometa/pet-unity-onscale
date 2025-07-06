@@ -8,11 +8,8 @@ public class EventManager : MonoBehaviour
 
     #region Events
 
-    //public Action<PlayerContext> GroundingHandler;
     public static event Action OnGrounding;
-
-    //public static UnityEvent<PlayerContext> OnGrounding;
-
+    public static event Action OnGravityGrounding;
 
     #endregion
 
@@ -31,5 +28,10 @@ public class EventManager : MonoBehaviour
     public static void TriggerGrounding()
     {
         OnGrounding?.Invoke();
+    }
+
+    public static void TriggerGravityGrounding()
+    {
+        OnGravityGrounding?.Invoke();
     }
 }

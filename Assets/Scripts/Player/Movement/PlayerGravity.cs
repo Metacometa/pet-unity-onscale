@@ -1,12 +1,13 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerGravity : MonoBehaviour
 {
     #region Link
 
     private Rigidbody2D rb;
+
+    private Player player;
+    private PlayerContext context;
 
     #endregion
 
@@ -35,9 +36,12 @@ public class PlayerGravity : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        player = GetComponent<Player>();
+        context = player.context;
     }
 
-    public void HandleGravity(in PlayerContext context)
+    public void HandleGravity()
     {
         GravityShift(context);
 
@@ -85,5 +89,20 @@ public class PlayerGravity : MonoBehaviour
     {
         rb.gravityScale = Mathf.Lerp(rb.gravityScale, fallGravityScale, 
             Time.fixedDeltaTime * fallGravityLerpSpeed);
+    }
+
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.red;
+
+            Vector3 dir = context.Orientation;
+
+            Vector3 startPoint = transform.position;
+            Vector3 endPoint = startPoint + dir * 2f;
+
+            Gizmos.DrawLine(startPoint, endPoint);
+        }
     }
 }

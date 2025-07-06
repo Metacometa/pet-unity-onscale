@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
@@ -8,6 +9,9 @@ public class PlayerJump : MonoBehaviour
 
     private PlayerGravity gravity;
     private PlayerDash dash;
+
+    private Player player;
+    private PlayerContext context;
 
     #endregion
 
@@ -27,15 +31,18 @@ public class PlayerJump : MonoBehaviour
 
         gravity = GetComponent<PlayerGravity>();
         dash = GetComponent<PlayerDash>();
+
+        player = GetComponent<Player>();
+        context = player.context;
     }
 
-    public void HandleJump(in InputContext inputContext, in PlayerContext playerContext)
+    public void HandleJump(in InputContext inputContext)
     {
         if (!inputContext.jumpPressed) return;
 
-        if (playerContext.airState == AirState.Grounded)
+        if (context.airState == AirState.Grounded)
         {
-            Vector2 jumpDir = -playerContext.Orientation;
+            Vector2 jumpDir = -context.Orientation;
             rb.AddForce(jumpDir * jumpForce, ForceMode2D.Force);
         }
     }
@@ -46,7 +53,7 @@ public class PlayerJump : MonoBehaviour
     public float castDistance;
     public LayerMask groundLayer;
 
-    public bool GroundCheck(in PlayerContext context)
+    public bool GroundCheck()
     {
         return Physics2D.BoxCast(transform.position, boxSize, 0, context.Orientation, castDistance, groundLayer);
     }

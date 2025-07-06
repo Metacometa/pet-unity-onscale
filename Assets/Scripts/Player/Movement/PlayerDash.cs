@@ -24,6 +24,8 @@ public class PlayerDash : MonoBehaviour
 
     [SerializeField] private float postDashSpeed;
 
+    Vector2 previousOrientation = Vector2.zero;
+
     #endregion
 
     void Awake()
@@ -46,7 +48,7 @@ public class PlayerDash : MonoBehaviour
 
     IEnumerator DashCoroutine(Vector3 dashDir, PlayerContext context)
     {
-        Vector2 previousOrientation = context.Orientation;
+        previousOrientation = context.Orientation;
 
         context.Orientation = Vector2.zero;
 
@@ -60,16 +62,15 @@ public class PlayerDash : MonoBehaviour
 
         rb.linearVelocity = dashDir * postDashSpeed;
 
-        context.isDashing = false;
-        context.Orientation = previousOrientation;
-
-        //
+        StopDash(ref context);
     }
 
     public void StopDash(ref PlayerContext context)
     {
-        context.canDash = true;
+        //context.canDash = true;
+
         context.isDashing = false;
+        context.Orientation = previousOrientation;
 
         if (dashCoroutine != null)
         {

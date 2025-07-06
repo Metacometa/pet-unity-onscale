@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -58,19 +57,6 @@ public class Player : MonoBehaviour
 
         UpdateAirState();
         gravity?.HandleGravity(context);
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("Obstacle"))
-        {
-            Vector2 obstacleNormal = collision.contacts[0].normal;
-
-            context.Orientation = -obstacleNormal;
-
-            dash?.StopDash(ref context);
-            //rb.linearVelocity = Vector2.zero;
-        }  
     }
 
     void UpdateAirState()

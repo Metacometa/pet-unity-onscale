@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1747142814590478504}
   - component: {fileID: -8446121878656622548}
   - component: {fileID: -5329586358437960854}
+  - component: {fileID: 5192218256418992634}
   m_Layer: 6
   m_Name: Gravity Platform
   m_TagString: Obstacle
@@ -168,3 +169,16 @@ PolygonCollider2D:
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
   m_UseDelaunayMesh: 0
+--- !u!114 &5192218256418992634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8426468844773180545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f77f1a9f3bd25046b07030147f24f92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1

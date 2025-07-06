@@ -12,6 +12,8 @@ public class PlayerDash : MonoBehaviour
 
     private IEnumerator dashCoroutine;
 
+    private PlayerContext context;
+
     #endregion
 
     #region Public variables
@@ -34,19 +36,21 @@ public class PlayerDash : MonoBehaviour
         player = GetComponent<Player>();
 
         rb = GetComponent<Rigidbody2D>();
+
+        context = player.context;
     }
 
-    public void HandleDash(in InputContext inputContext, ref PlayerContext playerContext)
+    public void HandleDash(in InputContext inputContext)
     {
         if (!inputContext.dashPressed || inputContext.dashInput == Vector2.zero) { return; }
 
-        if (playerContext.isDashing || !playerContext.canDash ) return;
+        if (context.isDashing || !context.canDash ) return;
 
-        dashCoroutine = DashCoroutine(inputContext.dashInput, playerContext);
+        dashCoroutine = DashCoroutine(inputContext.dashInput);
         StartCoroutine(dashCoroutine);
     }
 
-    IEnumerator DashCoroutine(Vector3 dashDir, PlayerContext context)
+    IEnumerator DashCoroutine(Vector3 dashDir)
     {
         previousOrientation = context.Orientation;
 
@@ -62,10 +66,10 @@ public class PlayerDash : MonoBehaviour
 
         rb.linearVelocity = dashDir * postDashSpeed;
 
-        StopDash(ref context);
+        StopDash();
     }
 
-    public void StopDash(ref PlayerContext context)
+    public void StopDash()
     {
         //context.canDash = true;
 

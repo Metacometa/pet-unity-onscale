@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         movement?.HandleMovement(inputContext, context);
 
         jump?.HandleJump(inputContext, context);
-        dash?.HandleDash(inputContext, ref context);
+        dash?.HandleDash(inputContext);
 
         UpdateAirState();
         gravity?.HandleGravity(context);

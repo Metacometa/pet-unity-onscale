@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerCollisionHandler : MonoBehaviour
 {
@@ -22,6 +21,8 @@ public class PlayerCollisionHandler : MonoBehaviour
         playerContext = player.context;        
 
         rb = GetComponent<Rigidbody2D>();
+
+        if (dash) EventManager.OnGrounding += dash.StopDash;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -30,7 +31,9 @@ public class PlayerCollisionHandler : MonoBehaviour
 
         if (platform != null)
         {
-            dash?.StopDash(ref playerContext);
+            EventManager.TriggerGrounding();
+
+            //dash?.StopDash(ref playerContext);
             rb.linearVelocity = Vector2.zero;
 
             switch (platform.type)
@@ -38,7 +41,6 @@ public class PlayerCollisionHandler : MonoBehaviour
                 case PlatformType.Gravity:
                     Vector2 obstacleNormal = collision.contacts[0].normal;
                     playerContext.Orientation = -obstacleNormal;
-
                     break;
                 default:
                     break;

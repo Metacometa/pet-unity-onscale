@@ -8,7 +8,7 @@ public class PlayerContext
 
     public AirState airState = AirState.Null;
 
-    private Vector2 orientation = Vector2.down.normalized;
+    [SerializeField] private Vector2 orientation = Vector2.down.normalized;
     public Vector2 Orientation
     {
         get => orientation.normalized;

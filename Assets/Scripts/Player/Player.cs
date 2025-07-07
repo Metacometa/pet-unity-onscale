@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region Callbacks
+
     void Awake()
     {
         movement = GetComponent<PlayerMovement>();
@@ -57,6 +59,8 @@ public class Player : MonoBehaviour
         UpdateAirState();
         gravity?.HandleGravity();
     }
+
+    #endregion
 
     void UpdateAirState()
     {

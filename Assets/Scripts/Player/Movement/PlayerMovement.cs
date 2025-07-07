@@ -3,10 +3,31 @@ using UnityEngine.Windows;
 
 public class PlayerMovement : Movement
 {
+    #region Callbacks
+
     protected override void Awake()
     {
         base.Awake();
     }
+
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.yellow;
+
+            Vector3 dir = rb.linearVelocity.normalized;
+
+            Vector3 startPoint = transform.position;
+            Vector3 endPoint = startPoint + dir;
+
+            Gizmos.DrawLine(startPoint, endPoint);
+        }
+    }
+
+    #endregion
+
+    #region Functions
 
     public void HandleMovement(in InputContext inputContext, in PlayerContext playerContext)
     {
@@ -46,19 +67,5 @@ public class PlayerMovement : Movement
         return input.x;
     }
 
-    void OnDrawGizmos()
-    {
-        if (Application.isPlaying)
-        {
-            Gizmos.color = Color.yellow;
-
-            Vector3 dir = rb.linearVelocity.normalized;
-
-            Vector3 startPoint = transform.position;
-            Vector3 endPoint = startPoint + dir;
-
-            Gizmos.DrawLine(startPoint, endPoint);
-        }
-    }
-
+    #endregion
 }

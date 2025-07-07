@@ -25,6 +25,8 @@ public class PlayerJump : MonoBehaviour
 
     #endregion
 
+    #region Callbacks
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +37,27 @@ public class PlayerJump : MonoBehaviour
         player = GetComponent<Player>();
         context = player.context;
     }
+
+    private void OnDrawGizmos()
+    {
+        /*        if (Application.isPlaying)
+                {
+                    if (GroundCheck())
+                    {
+                        Gizmos.color = Color.green;
+                    }
+                    else
+                    {
+                        Gizmos.color = Color.red;
+                    }
+
+                    Gizmos.DrawWireCube((Vector2)transform.position + gravity.Orientation * castDistance, boxSize);
+                }*/
+    }
+
+    #endregion
+
+    #region Functions
 
     public void HandleJump(in InputContext inputContext)
     {
@@ -58,22 +81,7 @@ public class PlayerJump : MonoBehaviour
         return Physics2D.BoxCast(transform.position, boxSize, 0, context.Orientation, castDistance, groundLayer);
     }
 
-    private void OnDrawGizmos()
-    {
-/*        if (Application.isPlaying)
-        {
-            if (GroundCheck())
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-            }
-
-            Gizmos.DrawWireCube((Vector2)transform.position + gravity.Orientation * castDistance, boxSize);
-        }*/
-    }
+    #endregion
 
     #endregion
 }

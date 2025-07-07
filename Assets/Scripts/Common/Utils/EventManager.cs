@@ -10,6 +10,8 @@ public class EventManager : MonoBehaviour
     public static event Action OnGrounding;
     public static event Action OnGravityGrounding;
 
+    public static event Action OnDeath;
+
     #endregion
 
     void Awake()
@@ -27,6 +29,11 @@ public class EventManager : MonoBehaviour
     public static void TriggerGrounding()
     {
         OnGrounding?.Invoke();
+    }
+
+    public static void TriggerDeath()
+    {
+        OnDeath?.Invoke();
     }
 
     public static void TriggerGravityGrounding()

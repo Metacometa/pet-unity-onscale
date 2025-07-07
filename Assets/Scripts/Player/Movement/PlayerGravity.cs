@@ -33,6 +33,8 @@ public class PlayerGravity : MonoBehaviour
 
     #endregion
 
+    #region Callbacks
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,6 +42,25 @@ public class PlayerGravity : MonoBehaviour
         player = GetComponent<Player>();
         context = player.context;
     }
+
+    void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.red;
+
+            Vector3 dir = context.Orientation;
+
+            Vector3 startPoint = transform.position;
+            Vector3 endPoint = startPoint + dir * 2f;
+
+            Gizmos.DrawLine(startPoint, endPoint);
+        }
+    }
+
+    #endregion
+
+    #region Functions
 
     public void HandleGravity()
     {
@@ -91,18 +112,5 @@ public class PlayerGravity : MonoBehaviour
             Time.fixedDeltaTime * fallGravityLerpSpeed);
     }
 
-    void OnDrawGizmos()
-    {
-        if (Application.isPlaying)
-        {
-            Gizmos.color = Color.red;
-
-            Vector3 dir = context.Orientation;
-
-            Vector3 startPoint = transform.position;
-            Vector3 endPoint = startPoint + dir * 2f;
-
-            Gizmos.DrawLine(startPoint, endPoint);
-        }
-    }
+    #endregion
 }

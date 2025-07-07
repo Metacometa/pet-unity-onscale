@@ -13,16 +13,23 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     #endregion
 
+    #region Callbacks
+
     void Awake()
     {
         player = GetComponent<Player>();
         dash = GetComponent<PlayerDash>();
 
-        playerContext = player.context;        
+        playerContext = player.context;
 
         rb = GetComponent<Rigidbody2D>();
 
         EventManager.OnGrounding += ResetVelocity;
+    }
+
+    void OnDestroy()
+    {
+        EventManager.OnGrounding -= ResetVelocity;
     }
 
     void OnCollisionStay2D(Collision2D collision)
@@ -45,7 +52,9 @@ public class PlayerCollisionHandler : MonoBehaviour
         }
     }
 
-    private void ResetVelocity()
+    #endregion
+
+    void ResetVelocity()
     {
         rb.linearVelocity = Vector2.zero;
     }

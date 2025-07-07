@@ -30,6 +30,8 @@ public class PlayerDash : MonoBehaviour
 
     #endregion
 
+    #region Callbacks
+
     void Awake()
     {
         jump = GetComponent<PlayerJump>();
@@ -39,7 +41,6 @@ public class PlayerDash : MonoBehaviour
 
         context = player.context;
 
-        //EventManager.OnGrounding += UpdateDash;
         EventManager.OnGrounding += StopDash;
     }
 
@@ -53,6 +54,31 @@ public class PlayerDash : MonoBehaviour
             }
         }
     }
+
+    void OnDrawGizmos()
+    {
+        /*        if (Application.isPlaying)
+                {
+                    Vector2 playerPosition = transform.position;
+                    Vector2 dashPosition = GetComponent<PlayerInput>().mousePosition - playerPosition;
+
+                    Gizmos.color = Color.white;
+
+                    Vector3 startPoint = playerPosition;
+                    Vector3 endPoint = startPoint + (Vector3)dashPosition;
+
+                    Gizmos.DrawLine(startPoint, endPoint);
+                }*/
+    }
+
+    void OnDestroy()
+    {
+        EventManager.OnGrounding -= StopDash;
+    }
+
+    #endregion
+
+    #region Functions
 
     public void HandleDash(in InputContext inputContext)
     {
@@ -100,20 +126,6 @@ public class PlayerDash : MonoBehaviour
     {
         context.canDash = true;
     }
-
-    void OnDrawGizmos()
-    {
-/*        if (Application.isPlaying)
-        {
-            Vector2 playerPosition = transform.position;
-            Vector2 dashPosition = GetComponent<PlayerInput>().mousePosition - playerPosition;
-
-            Gizmos.color = Color.white;
-
-            Vector3 startPoint = playerPosition;
-            Vector3 endPoint = startPoint + (Vector3)dashPosition;
-
-            Gizmos.DrawLine(startPoint, endPoint);
-        }*/
-    }
+    
+    #endregion
 }

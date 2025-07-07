@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerMovement : Movement
 {
@@ -38,6 +37,12 @@ public class PlayerMovement : Movement
         Vector2 horizontalDir = Vector2.Perpendicular(playerContext.Orientation).normalized;
 
         float verticalSpeed = Vector2.Dot(rb.linearVelocity, playerContext.Orientation);
+
+        float moveSpeed = airMoveSpeed;
+        if (playerContext.airState == AirState.Grounded)
+        {
+            moveSpeed = groundMoveSpeed;
+        }
 
         rb.linearVelocity = horizontalDir * evaluatedInput * moveSpeed + playerContext.Orientation * verticalSpeed;
     }

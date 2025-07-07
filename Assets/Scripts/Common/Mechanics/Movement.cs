@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] protected float moveSpeed = 5f;
+    [SerializeField] protected float airMoveSpeed = 5f;
+    [SerializeField] protected float groundMoveSpeed = 5f;
+
     protected Rigidbody2D rb;
 
     protected virtual void Awake()

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGravity : MonoBehaviour
@@ -41,6 +42,10 @@ public class PlayerGravity : MonoBehaviour
 
         player = GetComponent<Player>();
         context = player.context;
+    }
+
+    void OnDestroy()
+    {
     }
 
     void OnDrawGizmos()
@@ -106,10 +111,20 @@ public class PlayerGravity : MonoBehaviour
         rb.linearVelocity = horizontalDir * horizontalSpeed + context.Orientation * limitedVerticalSpeed;
     }
 
-    private void SetFallGravity()
+    void SetFallGravity()
     {
         rb.gravityScale = Mathf.Lerp(rb.gravityScale, fallGravityScale, 
             Time.fixedDeltaTime * fallGravityLerpSpeed);
+    }
+
+    public void ResetVelocity()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    public void ResetOrientation()
+    {
+        context.Orientation = Vector2.zero;
     }
 
     #endregion

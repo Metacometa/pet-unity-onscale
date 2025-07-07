@@ -1366,6 +1366,7 @@ GameObject:
   - component: {fileID: 1348172921}
   - component: {fileID: 1348172920}
   - component: {fileID: 1348172923}
+  - component: {fileID: 1348172924}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1494,7 +1495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0af85329a18084591e5b4868e7001e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4.5
+  airMoveSpeed: 5
+  groundMoveSpeed: 7
 --- !u!114 &1348172916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1516,6 +1518,7 @@ MonoBehaviour:
     isDashing: 0
     canDash: 1
     airState: 0
+    orientation: {x: 0, y: -1}
 --- !u!114 &1348172918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1613,6 +1616,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2b30341cdee3a745a3fc3ba8afaca69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1348172924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348172910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec80eb83fb5c564f86b7aa4c8e7179b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1457082234
@@ -2407,6 +2422,11 @@ Transform:
   - {fileID: 53933913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1977352285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5710077475953434008, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
+  m_PrefabInstance: {fileID: 4019585365965864209}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &798388703984111646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2497,6 +2517,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1730618003}
     m_Modifications:
+    - target: {fileID: 4921571304176831801, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
+      propertyPath: checkpointOrientation.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5710077475953434008, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
       propertyPath: m_Name
       value: Checkpoint
@@ -2511,7 +2535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109022402427026740, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.61
+      value: 0.51
       objectReference: {fileID: 0}
     - target: {fileID: 9109022402427026740, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2548,7 +2572,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5710077475953434008, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4019585365965864212}
   m_SourcePrefab: {fileID: 100100000, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
 --- !u!4 &4019585365965864210 stripped
 Transform:
@@ -2560,12 +2587,48 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4921571304176831801, guid: fbd6b1d80b910614e995e98d56bf88e6, type: 3}
   m_PrefabInstance: {fileID: 4019585365965864209}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1977352285}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44340c0ba9cc9d64386bb26562a575ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &4019585365965864212
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977352285}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
     #region Links
 
     private Player player;
+    [SerializeField] private PlayerDeathManager deathManager;
 
     #endregion
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         }
 
         player = FindFirstObjectByType<Player>();
+        deathManager = player?.GetComponent<PlayerDeathManager>();
 
         EventManager.OnDeath += RespawnPlayer;
     }
@@ -42,9 +44,12 @@ public class GameManager : MonoBehaviour
 
     void RespawnPlayer()
     {
+        deathManager?.ResetPlayer();
+
         if (player && checkpoint)
         {
-            player.transform.position = checkpoint.transform.position;
+            Debug.Log("RespawnPlayer");
+            player.transform.position = checkpoint.transform.position;         
         }
     }
 }

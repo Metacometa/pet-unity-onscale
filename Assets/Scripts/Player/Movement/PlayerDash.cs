@@ -122,7 +122,19 @@ public class PlayerDash : MonoBehaviour
         }
     }
 
-    void UpdateDash()
+    public void TerminateDash()
+    {
+        if (!context.isDashing) return;
+
+        context.isDashing = false;
+
+        if (dashCoroutine != null)
+        {
+            StopCoroutine(dashCoroutine);
+        }
+    }
+
+    public void UpdateDash()
     {
         context.canDash = true;
     }

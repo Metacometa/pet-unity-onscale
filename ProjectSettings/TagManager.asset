@@ -5,19 +5,18 @@ TagManager:
   serializedVersion: 3
   tags:
   - Obstacle
-  - Exit
-  - UnscaleableZone
+  - DeathArea
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - DeathArea
   - Water
   - UI
   - Platforms
   - Midground
   - Background
-  - 
+  - Player
   - 
   - 
   - 

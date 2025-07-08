@@ -19,7 +19,7 @@ public class PlayerDeathManager : MonoBehaviour
     public void ResetPlayer()
     {
         dash?.UpdateDash();
-        dash?.TerminateDash();
+        dash?.StopDash();
 
         gravity?.ResetVelocity();
         gravity?.ResetOrientation();

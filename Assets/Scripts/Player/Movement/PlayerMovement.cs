@@ -24,6 +24,7 @@ public class PlayerMovement : Movement
         }
     }
 
+
     #endregion
 
     #region Functions
@@ -31,6 +32,8 @@ public class PlayerMovement : Movement
     public void HandleMovement(in InputContext inputContext, in PlayerContext playerContext)
     {
         if (playerContext.isDashing) { return; }
+
+        Debug.Log($"Input: {inputContext.moveInput}, Orientation: {playerContext.Orientation}");
 
         float evaluatedInput = OrientInput(inputContext.moveInput, playerContext);
 
@@ -51,20 +54,20 @@ public class PlayerMovement : Movement
     {
         float angle = Mathf.Repeat(Vector2.SignedAngle(context.Orientation, Vector2.right), 360f);
 
-        if ((0f <= angle && angle <= 45f) ||
+        if ((0f <= angle && angle < 45f) ||
                 (315f <= angle && angle <= 360f))
         {
             return input.y;
         }
-        else if (45f <= angle && angle <= 135f)
+        else if (45f <= angle && angle < 135f)
         {
             return input.x;
         }
-        else if (135 <= angle && angle <= 225f)
+        else if (135 <= angle && angle < 225f)
         {
             return -input.y;
         }
-        else if (225f < angle && angle <= 315f)
+        else if (225f <= angle && angle < 315f)
         {
             return -input.x;
         }

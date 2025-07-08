@@ -11,28 +11,18 @@ public class Checkpoint : MonoBehaviour
     {
         player = FindFirstObjectByType<Player>();
         playerContext = player?.context;
-
-        //EventManager.OnDeath += SetOrientationToPlayer;
     }
 
     void OnDestroy()
     {
-        //EventManager.OnDeath -= SetOrientationToPlayer;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("Checkpoint Trigger");
-            //Debug.Log($"On trigger speed: {}")
             playerContext.Orientation = checkpointOrientation;
-            //checkpointOrientation = playerContext.Orientation;
         }
     }
 
-/*    void SetOrientationToPlayer()
-    {
-        playerContext.Orientation = checkpointOrientation;
-    }*/
 }

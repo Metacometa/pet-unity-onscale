@@ -13,6 +13,13 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     #endregion
 
+    #region Private Variables
+
+    [SerializeField] private float collisionRadius;
+    [SerializeField] private LayerMask collisionLayerMask;
+
+    #endregion
+
     #region Callbacks
 
     void Awake()
@@ -32,9 +39,63 @@ public class PlayerCollisionHandler : MonoBehaviour
         EventManager.OnGrounding -= ResetVelocity;
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void Update()
+    {
+        CollideWithPlatforms();
+    }
+
+    void CollideWithPlatforms()
+    {
+        Collider2D[] platforms = Physics2D.OverlapCircleAll(transform.position, collisionRadius, collisionLayerMask);
+
+        Collider2D closestPlatform = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider2D platform in platforms)
+        {
+            Vector2 point = platform.ClosestPoint(transform.position);
+            float distance = Vector2.Distance(point, transform.position); 
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlatform = platform;
+            }
+        }
+
+        if (closestPlatform)
+        {
+
+            CollideWithPlatform(closestPlatform);
+        }
+    }
+
+    void CollideWithPlatform(Collider2D collision)
     {
         Platform platform = collision.transform.GetComponent<Platform>();
+        if (platform == null) return;
+
+        //Debug.Log("CollideWithPlatform");
+
+        EventManager.TriggerGrounding();
+
+        switch (platform.type)
+        {
+            case PlatformType.Gravity:
+                Vector2 closestPoint = collision.ClosestPoint(transform.position);
+                Vector2 platformNormal = (Vector2)transform.position - closestPoint;
+
+                //Vector2 obstacleNormal = collision.contacts[0].normal;
+                playerContext.Orientation = -platformNormal.normalized;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+/*        Platform platform = collision.transform.GetComponent<Platform>();
 
         if (platform != null)
         {
@@ -49,7 +110,13 @@ public class PlayerCollisionHandler : MonoBehaviour
                 default:
                     break;
             }
-        }
+        }*/
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, collisionRadius);
     }
 
     #endregion

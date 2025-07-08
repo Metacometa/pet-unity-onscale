@@ -92,14 +92,9 @@ public class PlayerDash : MonoBehaviour
 
     IEnumerator DashCoroutine(Vector3 dashDir)
     {
-        previousOrientation = context.Orientation;
-
-        context.Orientation = Vector2.zero;
-
         context.isDashing = true;
         context.canDash = false;
 
-        rb.gravityScale = 0f;
         rb.linearVelocity = dashDir * dashSpeed;
 
         yield return new WaitForSeconds(dashTime);
@@ -113,19 +108,6 @@ public class PlayerDash : MonoBehaviour
     {
         if (!context.isDashing) return;
         
-        context.isDashing = false;
-        context.Orientation = previousOrientation;
-
-        if (dashCoroutine != null)
-        {
-            StopCoroutine(dashCoroutine);
-        }
-    }
-
-    public void TerminateDash()
-    {
-        if (!context.isDashing) return;
-
         context.isDashing = false;
 
         if (dashCoroutine != null)

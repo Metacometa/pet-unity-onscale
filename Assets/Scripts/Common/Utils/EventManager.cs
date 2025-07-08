@@ -35,9 +35,4 @@ public class EventManager : MonoBehaviour
     {
         OnDeath?.Invoke();
     }
-
-    public static void TriggerGravityGrounding()
-    {
-        OnGravityGrounding?.Invoke();
-    }
 }

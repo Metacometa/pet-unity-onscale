@@ -7,10 +7,14 @@ public class Checkpoint : MonoBehaviour
     private Player player;
     private PlayerContext playerContext;
 
+    private Collider2D colliler2D;
+
     void Awake()
     {
         player = FindFirstObjectByType<Player>();
         playerContext = player?.context;
+
+        colliler2D = GetComponent<Collider2D>();
     }
 
     void OnDestroy()
@@ -22,6 +26,8 @@ public class Checkpoint : MonoBehaviour
         if (collision.transform.CompareTag("Player"))
         {
             playerContext.Orientation = checkpointOrientation;
+
+            colliler2D.enabled = false;
         }
     }
 

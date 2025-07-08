@@ -23,7 +23,5 @@ public class PlayerDeathManager : MonoBehaviour
 
         gravity?.ResetVelocity();
         gravity?.ResetOrientation();
-
-        Debug.Log("ResetPlayer");
     }
 }

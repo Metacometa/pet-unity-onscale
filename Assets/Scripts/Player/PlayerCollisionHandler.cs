@@ -41,10 +41,10 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     void Update()
     {
-        CollideWithPlatforms();
+        CheckPlatforms();
     }
 
-    void CollideWithPlatforms()
+    void CheckPlatforms()
     {
         Collider2D[] platforms = Physics2D.OverlapCircleAll(transform.position, collisionRadius, collisionLayerMask);
 
@@ -65,52 +65,27 @@ public class PlayerCollisionHandler : MonoBehaviour
 
         if (closestPlatform)
         {
-
-            CollideWithPlatform(closestPlatform);
+            PlatformInteraction(closestPlatform);
         }
     }
 
-    void CollideWithPlatform(Collider2D collision)
+    void PlatformInteraction(Collider2D collision)
     {
         Platform platform = collision.transform.GetComponent<Platform>();
         if (platform == null) return;
 
-        //Debug.Log("CollideWithPlatform");
 
         EventManager.TriggerGrounding();
 
         switch (platform.type)
         {
-            case PlatformType.Gravity:
-                Vector2 closestPoint = collision.ClosestPoint(transform.position);
-                Vector2 platformNormal = (Vector2)transform.position - closestPoint;
-
-                //Vector2 obstacleNormal = collision.contacts[0].normal;
+            case PlatformType.Gravity:    
+                Vector2 platformNormal = GravityPhysics.GetNormal(collision, transform.position);
                 playerContext.Orientation = -platformNormal.normalized;
                 break;
             default:
                 break;
         }
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-/*        Platform platform = collision.transform.GetComponent<Platform>();
-
-        if (platform != null)
-        {
-            EventManager.TriggerGrounding();
-
-            switch (platform.type)
-            {
-                case PlatformType.Gravity:
-                    Vector2 obstacleNormal = collision.contacts[0].normal;
-                    playerContext.Orientation = -obstacleNormal;
-                    break;
-                default:
-                    break;
-            }
-        }*/
     }
 
     void OnDrawGizmos()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GravityPhysics : MonoBehaviour
+public class VectorMath : MonoBehaviour
 {
     public static Vector2 GetNormal(in Collider2D collision, in Vector2 point)
     {

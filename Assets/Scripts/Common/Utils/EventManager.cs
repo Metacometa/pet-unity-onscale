@@ -8,7 +8,7 @@ public class EventManager : MonoBehaviour
     #region Events
 
     public static event Action OnGrounding;
-    public static event Action OnGravityGrounding;
+    public static event Action OnGravityColliding;
 
     public static event Action OnDeath;
 
@@ -29,6 +29,13 @@ public class EventManager : MonoBehaviour
     public static void TriggerGrounding()
     {
         OnGrounding?.Invoke();
+        Debug.Log("TriggerGrounding");
+    }
+
+    public static void TriggerGravityColliding()
+    {
+        OnGravityColliding?.Invoke();
+        Debug.Log("TriggerGravityColliding");
     }
 
     public static void TriggerDeath()

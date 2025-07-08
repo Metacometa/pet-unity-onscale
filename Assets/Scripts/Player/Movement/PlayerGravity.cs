@@ -100,7 +100,7 @@ public class PlayerGravity : MonoBehaviour
 
     public void ClampFallSpeed(in PlayerContext context)
     {
-        Vector2 projection = GravityPhysics.ProjectOnOrientation(rb.linearVelocity, context.Orientation);
+        Vector2 projection = VectorMath.ProjectOnOrientation(rb.linearVelocity, context.Orientation);
         float limitedVerticalSpeed = Mathf.Clamp(projection.y, -maxFallSpeed, maxFallSpeed);
 
         rb.linearVelocity = Vector2.Perpendicular(context.Orientation).normalized * projection.x + 

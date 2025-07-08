@@ -41,18 +41,12 @@ public class PlayerDash : MonoBehaviour
 
         context = player.context;
 
-        EventManager.OnGrounding += StopDash;
+        EventManager.OnGravityColliding += StopDash;
+        EventManager.OnGrounding += UpdateDash;
     }
 
     void Update()
     {
-        if (jump.GroundCheck())
-        {
-            if (!context.isDashing)
-            {
-                UpdateDash();
-            }
-        }
     }
 
     void OnDrawGizmos()
@@ -73,7 +67,8 @@ public class PlayerDash : MonoBehaviour
 
     void OnDestroy()
     {
-        EventManager.OnGrounding -= StopDash;
+        EventManager.OnGravityColliding -= StopDash;
+        EventManager.OnGrounding -= UpdateDash;
     }
 
     #endregion
@@ -118,7 +113,11 @@ public class PlayerDash : MonoBehaviour
 
     public void UpdateDash()
     {
-        context.canDash = true;
+        if (!context.isDashing)
+        {
+            context.canDash = true;
+
+        }
     }
     
     #endregion

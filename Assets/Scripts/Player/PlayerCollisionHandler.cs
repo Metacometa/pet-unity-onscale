@@ -6,6 +6,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     private Player player;
     private PlayerDash dash;
+    private PlayerJump jump;
 
     private PlayerContext playerContext;
 
@@ -15,8 +16,15 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     #region Private Variables
 
+    [Header("Collisions")]
     [SerializeField] private float collisionRadius;
     [SerializeField] private LayerMask collisionLayerMask;
+
+/*    [Space]
+
+    [Header("Materials")]
+    [SerializeField] private PhysicsMaterial2D groundedMaterial;
+    [SerializeField] private PhysicsMaterial2D inAirMaterial;*/
 
     #endregion
 
@@ -26,23 +34,38 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         player = GetComponent<Player>();
         dash = GetComponent<PlayerDash>();
+        jump = GetComponent<PlayerJump>();
 
         playerContext = player.context;
 
         rb = GetComponent<Rigidbody2D>();
 
-        EventManager.OnGrounding += ResetVelocity;
+        EventManager.OnGravityColliding += ResetVelocity;
     }
 
     void OnDestroy()
     {
-        EventManager.OnGrounding -= ResetVelocity;
+        EventManager.OnGravityColliding -= ResetVelocity;
     }
 
     void Update()
     {
         CheckPlatforms();
+
+        bool groundCheck = (bool)(jump?.GroundCheck());
+        if (groundCheck)
+        {
+            EventManager.TriggerGrounding();
+        }
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, collisionRadius);
+    }
+
+    #endregion
 
     void CheckPlatforms()
     {
@@ -54,7 +77,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         foreach (Collider2D platform in platforms)
         {
             Vector2 point = platform.ClosestPoint(transform.position);
-            float distance = Vector2.Distance(point, transform.position); 
+            float distance = Vector2.Distance(point, transform.position);
 
             if (distance < closestDistance)
             {
@@ -74,27 +97,21 @@ public class PlayerCollisionHandler : MonoBehaviour
         Platform platform = collision.transform.GetComponent<Platform>();
         if (platform == null) return;
 
-
-        EventManager.TriggerGrounding();
-
         switch (platform.type)
         {
-            case PlatformType.Gravity:    
-                Vector2 platformNormal = GravityPhysics.GetNormal(collision, transform.position);
+            case PlatformType.Gravity:
+                Vector2 platformNormal = VectorMath.GetNormal(collision, transform.position);
                 playerContext.Orientation = -platformNormal.normalized;
+
+                EventManager.TriggerGravityColliding();
+                break;
+            case PlatformType.Normal:
+
                 break;
             default:
                 break;
         }
     }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, collisionRadius);
-    }
-
-    #endregion
 
     void ResetVelocity()
     {
